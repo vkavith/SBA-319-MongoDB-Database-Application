@@ -8,11 +8,15 @@ conn();
 const starterMeals = require("./config/mealseed");
 const Meal = require("./models/meals");
 
+const starterAreas = require("./config/areaseed");
+const Area = require("./models/areas");
+
 const mealRoutes = require("./routes/mealRoutes");
+const areaRoutes = require("./routes/areaRoutes");
 
 app.use(express.json());
 app.use("/api/meals", mealRoutes);
-
+app.use("/api/area", areaRoutes);
 //home route
 app.get("/", (req, res) => {
   res.send("Welcome to Meals DBI");
@@ -37,16 +41,17 @@ app.get("/api/seed/meals", async (req, res) => {
   }
 });
 
+//Seed Areas
 app.get("/api/seed/areas", async (req, res) => {
   // Changed the route path
   try {
     // Clear existing data
-    await Meal.deleteMany({});
+    await Area.deleteMany({});
 
     // Insert new data
-    const seededMeals = await Meal.create(starterMeals);
+    const seededAreas = await Area.create(starterAreas);
     console.log("Database seeded successfully");
-    res.json(seededMeals);
+    res.json(seededAreas);
   } catch (error) {
     console.error("Seeding error:", error.message);
     res.status(500).json({ error: error.message });

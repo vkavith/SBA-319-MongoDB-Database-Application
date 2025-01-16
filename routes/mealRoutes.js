@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-//show route - get 1 fruit
+//show route - get 1 Meal
 
 router.get("/:id", async (req, res) => {
   try {
@@ -60,7 +60,6 @@ router.delete("/:id", async (req, res) => {
 router.post("/test-validation/name", async (req, res) => {
   try {
     const invalidName = {
-      
       name: "B",
       category: "Beef",
       area: "French",
@@ -70,45 +69,41 @@ router.post("/test-validation/name", async (req, res) => {
       cookTime: 240,
     };
     await Meal.create(invalidName);
-    res.status(200).json({message: "Validation should have failed"});
+    res.status(200).json({ message: "Validation should have failed" });
   } catch (error) {
     res.status(400).json({
-        message: "Name validation failed as expected",
-        error: error.message
+      message: "Name validation failed as expected",
+      error: error.message,
     });
-    
   }
 });
-  //Test case 2: Invalid Difficulty Level
-  router.post("/test-validation/difficulty", async (req, res) => {
+//Test case 2: Invalid Difficulty Level
+router.post("/test-validation/difficulty", async (req, res) => {
   try {
     const invalidDifficulty = {
-      
       name: "Moroccan Lamb Tagine",
       category: "Lamb",
       area: "Moroccan",
       instructions:
         "1. Marinate lamb with spices \n 2. Add Lamb, onions, garlic\n 3. Pour in stock and add dried fruits. Simmer for 2 hours \n  4. Serve with couscous",
-      difficulty: "Super Hard",  // Invalid Difficulty
+      difficulty: "Super Hard", // Invalid Difficulty
       cookTime: 150,
     };
     await Meal.create(invalidDifficulty);
-    res.status(200).json({message: "Validation should have failed"});
+    res.status(200).json({ message: "Validation should have failed" });
   } catch (error) {
     res.status(400).json({
-        message: "Difficulty validation failed as expected",
-        error: error.message
+      message: "Difficulty validation failed as expected",
+      error: error.message,
     });
   }
-  });
+});
 
-  //Test case 3: Invalid Cooking Time
-  router.post("/test-validation/cooktime", async(req, res) => {
-
+//Test case 3: Invalid Cooking Time
+router.post("/test-validation/cooktime", async (req, res) => {
   try {
     //Test case: Invalid cooking time for Easy Difficulty
     const invalidTime = {
-      
       name: "Sushi Rolls",
       category: "Seafood",
       area: "Japanese",
@@ -120,12 +115,11 @@ router.post("/test-validation/name", async (req, res) => {
     const meal = new Meal(invalidTime);
     await meal.validateMeal();
     await meal.save();
-    res.status(200).json({message: "Validation should have failed"});
+    res.status(200).json({ message: "Validation should have failed" });
   } catch (error) {
     res.status(400).json({
-      message:
-        "Cook time validation failed as expected",
-      error: error.message
+      message: "Cook time validation failed as expected",
+      error: error.message,
     });
   }
 });
